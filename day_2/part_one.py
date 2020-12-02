@@ -1,3 +1,5 @@
+import re
+
 def validate(cmin, cmax, char, pword):
     count = pword.count(char)
     return count >= cmin and count <= cmax
@@ -7,12 +9,13 @@ def main():
     
     with open('002_input.txt') as f:
         for line in f:
-            parts = line.split(' ')
-            cmin, cmax = map(int, parts[0].split('-'))
-            letter = parts[1][0]
-            pword  = parts[2]
+            pattern = re.search('(\d+)-(\d+) (\w): (\w+)', line)
+            cmin = int(pattern[1])
+            cmax = int(pattern[2])
+            char = pattern[3]
+            pword = pattern[4]
             
-            if validate(cmin, cmax, letter, pword):
+            if validate(cmin, cmax, char, pword):
                 valid += 1
     
     print('Valid passwords count: {}'.format(valid))

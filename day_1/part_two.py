@@ -1,3 +1,5 @@
+import sys
+
 def part_two(nums):
     snums = set(nums)
     for i in range(len(nums)):
@@ -11,7 +13,7 @@ def part_two(nums):
     raise Exception()
 
 def main():
-    with open('001_input.txt') as f:
+    with open(sys.argv[1]) as f:
         data = sorted(map(int, f.read().splitlines()))
         
     x, y, z = part_two(data)

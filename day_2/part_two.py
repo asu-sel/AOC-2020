@@ -1,4 +1,5 @@
 import re
+import sys
 
 def validate(cone, ctwo, char, pword):
     return (pword[cone - 1] == char) ^ (pword[ctwo - 1] == char)
@@ -6,7 +7,7 @@ def validate(cone, ctwo, char, pword):
 def main():
     valid = 0
     
-    with open('002_input.txt') as f:
+    with open(sys.argv[1]) as f:
         for line in f:
             pattern = re.search('(\d+)-(\d+) (\w): (\w+)', line)
             parts = line.split(' ')

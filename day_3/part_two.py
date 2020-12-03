@@ -1,3 +1,5 @@
+import sys
+
 def traverse(data, dx, dy):
     w, h = len(data[0]), len(data)
     x, y = 0, 0
@@ -9,7 +11,7 @@ def traverse(data, dx, dy):
     return count
 
 def main():
-    with open('003.in') as f:
+    with open(sys.argv[1]) as f:
         data = f.read().splitlines()
     
     slopes = [(1, 1), (3, 1), (5, 1), (7, 1), (1, 2)]

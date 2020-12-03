@@ -1,4 +1,5 @@
 import re
+import sys
 
 def validate(cmin, cmax, char, pword):
     count = pword.count(char)
@@ -7,7 +8,7 @@ def validate(cmin, cmax, char, pword):
 def main():
     valid = 0
     
-    with open('002_input.txt') as f:
+    with open(sys.argv[1]) as f:
         for line in f:
             pattern = re.search('(\d+)-(\d+) (\w): (\w+)', line)
             cmin = int(pattern[1])

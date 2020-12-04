@@ -5,19 +5,17 @@ fs = set(['byr', 'iyr', 'eyr', 'hgt', 'hcl', 'ecl', 'pid'])
 ecl = set(['amb', 'blu', 'brn', 'gry', 'grn', 'hzl', 'oth'])
 
 def is_valid(p):
-    vrange = lambda minv, maxv, v: int(v) and minv <= int(v) <= maxv
-
     if not all(x in p for x in fs): return False 
 
-    if not 1920 <= p['byr']) <= 2002: return False
+    if not 1920 <= int(p['byr']) <= 2002: return False
 
-    if not 2010 <= p['iyr'] <= 2020: return False
+    if not 2010 <= int(p['iyr']) <= 2020: return False
 
-    if not 2020 <= p['eyr'] <= 2030: return False
+    if not 2020 <= int(p['eyr']) <= 2030: return False
 
     if not (pat := match(r'^(\d{2,3})(cm|in)$', p['hgt'])): return False
-    if pat[2] == 'in' and not 59 <= pat[1] <= 76: return False
-    if pat[2] == 'cm' and not 150 <= pat[1] <= 193: return False
+    if pat[2] == 'in' and not 59 <= int(pat[1]) <= 76: return False
+    if pat[2] == 'cm' and not 150 <= int(pat[1]) <= 193: return False
 
     if not match(r'#[\da-f]{6}$', p['hcl']): return False
 

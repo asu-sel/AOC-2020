@@ -5,8 +5,6 @@ fs = set(['byr', 'iyr', 'eyr', 'hgt', 'hcl', 'ecl', 'pid'])
 ecl = set(['amb', 'blu', 'brn', 'gry', 'grn', 'hzl', 'oth'])
 
 def is_valid(p):
-    vrange = lambda minv, maxv, v: int(v) and minv <= int(v) <= maxv
-
     if not all(x in p for x in fs): return False 
 
     if not 1920 <= p['byr']) <= 2002: return False

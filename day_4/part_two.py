@@ -1,40 +1,28 @@
 import sys
 from re import match
 
-fs = set(['byr', 'iyr', 'eyr', 'hgt', 'hcl', 'ecl', 'pid'])
 ecl = set(['amb', 'blu', 'brn', 'gry', 'grn', 'hzl', 'oth'])
 
+vs = {
+    'byr': lambda v: 1920 <= int(v) <= 2002,
+    'iyr': lambda v: 2010 <= int(v) <= 2020,
+    'eyr': lambda v: 2020 <= int(v) <= 2030,
+    'hcl': lambda v: match(r'^#[\da-f]{6}$', v),
+    'ecl': lambda v: v in ecl,
+    'pid': lambda v: match(r'^\d{9}$', v),
+    'hgt': lambda v: (v[-2:] == 'in' and 59 <= int(v[:-2]) <= 76) or (v[-2:] == 'cm' and 150 <= int(v[:-2]) <= 193)
+}
+
 def is_valid(p):
-    if not all(x in p for x in fs): return False 
-
-    if not 1920 <= int(p['byr']) <= 2002: return False
-
-    if not 2010 <= int(p['iyr']) <= 2020: return False
-
-    if not 2020 <= int(p['eyr']) <= 2030: return False
-
-    if not (pat := match(r'^(\d{2,3})(cm|in)$', p['hgt'])): return False
-    if pat[2] == 'in' and not 59 <= int(pat[1]) <= 76: return False
-    if pat[2] == 'cm' and not 150 <= int(pat[1]) <= 193: return False
-
-    if not match(r'#[\da-f]{6}$', p['hcl']): return False
-
-    if p['ecl'] not in ecl: return False
-
-    if not match(r'^\d{9}$', p['pid']): return False
-
-    return True
+    return set(vs).issubset(p) and all(vs[f](p[f]) for f in vs)
 
 
 def main():
     with open(sys.argv[1]) as f:
         passports = [p.replace(' ', '\n') for p in f.read().split('\n\n')]
         passports = [dict(f.split(':') for f in p.split('\n')) for p in passports]
-    
-    count = 0
-    for p in passports: count += is_valid(p)
-    
-    print('Valid count is {}'.format(count))
+
+    print('Valid count is {}'.format(sum(is_valid(p) for p in passports)))
 
 if __name__ == '__main__':
     main()
